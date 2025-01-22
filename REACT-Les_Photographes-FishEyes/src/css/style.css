@@ -217,7 +217,7 @@ body {
 }
 
 .dropdown__link {
-  text-decoration: none;
+  cursor: pointer;
   color: #fff;
   font-size: 1.25rem;
   font-weight: bold;

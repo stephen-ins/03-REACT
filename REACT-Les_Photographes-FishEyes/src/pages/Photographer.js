@@ -7,10 +7,9 @@ const Photographer = () => {
   // useParams() est un composant de react router permettant de récupérer les paramètres de recherches dans l'URL
   // id renvoi l'id du photographe transmit dans l'URL
   const { id } = useParams();
-  const { search } = useParams()
   const dataPhotograph = getPhotographerById(id);
   // console.log(dataPhotograph);
-  const dataMediasPhotograph = getMediaPhotographerByID(id, search);
+  const dataMediasPhotograph = getMediaPhotographerByID(id);
   return (
     <>
       <Header data={dataPhotograph} />;

@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faHeart, faL } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -14,6 +14,7 @@ import Counter from "yet-another-react-lightbox/plugins/counter";
 import Download from "yet-another-react-lightbox/plugins/download";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import react from "react";
 
 
 
@@ -23,8 +24,6 @@ export default function Main(data) {
   // console.log(photographer)
   const medias = data.medias;
   // console.log(medias);
-  const { search } = useParams();
-  // console.log(search);
 
   // total likes
   let nbTotalLikes = 0
@@ -73,18 +72,11 @@ export default function Main(data) {
   // console.log(openLightBox)
 
   // console.log(open);
-  const currentPath = `/assets/images/photographers/samplePhotos-Medium/${photographer.name}/`
-  // console.log(currentPath)
-  const slides = medias.map(({ image, video, title }) => ({
-    // console.log(image);
-    // console.log(video);
-    // console.log(title);
-    ...(image ? { src: currentPath + image, description: title } : { type: "video", description: title, controls: false, width: 1280, height: 720, loop: true, muted: true, autoPlay: true, sources: [{ src: currentPath + video, type: "video/mp4" }] })
-  }));
+
 
   // console.log(slides);
 
-
+  const [category, setCategory] = React.useState("Popularité")
   const [mediasSearch, setMediasSearch] = React.useState(medias);
   const handleSearch = (search) => {
     // console.log(search)
@@ -105,11 +97,28 @@ export default function Main(data) {
     }
 
     setMediasSearch(mediasCopy)
+    setCategory(search)
+    setOpen(false)
 
   }
+  // console.log(mediasSearch)
+  // console.log(category)
 
-  // handleSearch()
-  console.log(mediasSearch)
+
+
+  const currentPath = `/assets/images/photographers/samplePhotos-Medium/${photographer.name}/`
+  // console.log(currentPath)
+  const slides = mediasSearch.map(({ image, video, title }) => ({
+    // console.log(image);
+    // console.log(video);
+    // console.log(title);
+    ...(image ? { src: currentPath + image, description: title } : { type: "video", description: title, controls: false, width: 1280, height: 720, loop: true, muted: true, autoPlay: true, sources: [{ src: currentPath + video, type: "video/mp4" }] })
+  }));
+
+
+
+
+
 
   return (
 
@@ -138,7 +147,7 @@ export default function Main(data) {
               onClick={handleOpen}
             >
               <p className="button__dropdown__text">
-                {search ? search : "Popularité"}
+                {category}
               </p>
 
               <FontAwesomeIcon
@@ -149,15 +158,15 @@ export default function Main(data) {
             {open ? (
               <div className="dropdown__content">
                 <div className="dropdown__item">
-                  <span onClick={() => handleSearch("Date")} className="dropdown__link">
+                  <span onClick={() => handleSearch(category == "Date" ? "Popularité" : "Date")} className="dropdown__link">
                     <hr className="separator" />
-                    <span className="link__text">{search == "Date" ? "Popularité" : "Date"}</span>
+                    <span className="link__text">{category == "Date" ? "Popularité" : "Date"}</span>
                   </span>
                 </div>
                 <div className="dropdown__item">
-                  <span onClick={() => handleSearch("Titre")} className="dropdown__link">
+                  <span onClick={() => handleSearch(category == "Titre" ? "Popularité" : "Titre")} className="dropdown__link">
                     <hr className="separator" />
-                    <span className="link__text">{search == "Titre" ? "Popularité" : "Titre"}</span>
+                    <span className="link__text">{category == "Titre" ? "Popularité" : "Titre"}</span>
                   </span>
                 </div>
               </div>

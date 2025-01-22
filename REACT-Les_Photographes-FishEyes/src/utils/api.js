@@ -17,7 +17,7 @@ export const getPhotographerById = (id) => {
 
 // créer une fonction permettant de créer tout les médias du photographe en fonction de l'id transmit dans l'URL
 
-export const getMediaPhotographerByID = (id, search) => {
+export const getMediaPhotographerByID = (id) => {
   // console.log(id);
   id = parseInt(id);
 
@@ -27,19 +27,7 @@ export const getMediaPhotographerByID = (id, search) => {
   // console.log(datas);
   // console.log(search)
 
-  if (search) {
-    switch (search) {
-      case 'Titre':
-        datas.sort((a, b) => a.title.localeCompare(b.title))
-        break;
-      case "Popularité":
-        datas.sort((a, b) => b.likes - a.likes)
-        break;
-      case 'Date':
-        datas.sort((a, b) => new Date(b.date) - new Date(a.date))
-        break;
-    }
-  }
+
 
   // console.log(datas)
 
